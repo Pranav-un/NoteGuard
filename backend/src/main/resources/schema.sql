@@ -26,9 +26,6 @@ CREATE TABLE IF NOT EXISTS notes (
     INDEX idx_owner_id (owner_id),
     INDEX idx_created_at (created_at),
     INDEX idx_expiration_time (expiration_time),
+    INDEX idx_notes_owner_created (owner_id, created_at DESC),
     FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- Create indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_notes_owner_created ON notes(owner_id, created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_notes_expiration ON notes(expiration_time) WHERE expiration_time IS NOT NULL;
