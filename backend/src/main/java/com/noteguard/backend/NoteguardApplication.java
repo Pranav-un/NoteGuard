@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NoteGuardBackendApplication {
+public class NoteguardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NoteGuardBackendApplication.class, args);
+		SpringApplication.run(NoteguardApplication.class, args);
 	}
 
 }
