@@ -1,10 +1,10 @@
-package com.noteguard;
+package com.noteguard.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NoteGuardApplicationTests {
+class NoteGuardBackendApplicationTests {
 
 	@Test
 	void contextLoads() {

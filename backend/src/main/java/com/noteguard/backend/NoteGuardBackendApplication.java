@@ -1,13 +1,13 @@
-package com.noteguard;
+package com.noteguard.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NoteGuardApplication {
+public class NoteGuardBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NoteGuardApplication.class, args);
+		SpringApplication.run(NoteGuardBackendApplication.class, args);
 	}
 
 }
