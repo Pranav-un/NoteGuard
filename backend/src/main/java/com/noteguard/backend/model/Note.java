@@ -1,5 +1,7 @@
 package com.noteguard.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Note {
 
     @Id
@@ -26,22 +29,29 @@ public class Note {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "encrypted_content", columnDefinition = "TEXT")
-    private String encryptedContent;
-
-    @Column(name = "owner_id", nullable = false)
-    private Long ownerId;
-
-    @Column(name = "expiration_time")
-    private LocalDateTime expirationTime;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private User owner;
+    @Column(name = "expiration_time")
+    private LocalDateTime expirationTime;
+
+    @Column(name = "share_token", unique = true)
+    private String shareToken;
+
+    @Column(name = "share_expiration_time")
+    private LocalDateTime shareExpirationTime;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "notes", "password"})
+    private User user;
+
+    @Column(name = "owner_id", nullable = false)
+    private Long ownerId;
 
     @PrePersist
     protected void onCreate() {
