@@ -15,7 +15,7 @@ RUN chmod +x mvnw
 COPY backend/src ./src
 RUN ./mvnw clean package -DskipTests
 
-FROM openjdk:21-jre-slim
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=backend-build /app/target/*.jar app.jar
 COPY --from=frontend-build /app/dist ./static

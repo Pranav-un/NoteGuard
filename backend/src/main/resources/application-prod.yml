@@ -5,13 +5,13 @@ spring:
 
   # PostgreSQL Database (FREE on Railway)
   datasource:
-    url: ${DATABASE_URL}  # Railway auto-provides this
+    url: ${DATABASE_URL} # Railway auto-provides this
     # No need to set username/password - Railway handles it
-    
-  # JPA Configuration 
+
+  # JPA Configuration
   jpa:
     hibernate:
-      ddl-auto: update  # Same as your MySQL setup
+      ddl-auto: update # Same as your MySQL setup
     show-sql: false
     # Hibernate auto-detects PostgreSQL
 
