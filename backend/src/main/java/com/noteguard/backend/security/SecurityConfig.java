@@ -55,10 +55,20 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
-                    .requestMatchers("/auth/**").permitAll()
+                    // API endpoints - with /api prefix
+                    .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/health").permitAll()
-                    .requestMatchers("/notes/shared/**").permitAll()
-                    .anyRequest().authenticated()
+                    .requestMatchers("/api/notes/share/**").permitAll()
+                    .requestMatchers("/api/notes/shared/**").permitAll()
+                    // Frontend static resources and routing
+                    .requestMatchers("/", "/login", "/register", "/dashboard", "/note/**", "/shared/**", "/admin").permitAll()
+                    .requestMatchers("/static/**", "/index.html", "/favicon.ico", "/manifest.json").permitAll()
+                    .requestMatchers("/*.js", "/*.css", "/*.ico", "/*.png", "/*.jpg", "/*.svg").permitAll()
+                    .requestMatchers("/assets/**").permitAll()
+                    // All other API requests require authentication
+                    .requestMatchers("/api/**").authenticated()
+                    // Everything else is permitted (for frontend routing)
+                    .anyRequest().permitAll()
             );
 
         http.authenticationProvider(authenticationProvider());
