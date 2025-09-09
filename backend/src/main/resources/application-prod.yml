@@ -5,12 +5,12 @@ spring:
 
   # PostgreSQL Database (FREE on Railway)
   # DataSource is configured in DatabaseConfig.java to handle Railway's URL format
-  
+
   # Disable SQL initialization - we use JPA/Hibernate DDL auto
   sql:
     init:
       mode: never
-  
+
   # JPA Configuration - optimized for Railway
   jpa:
     hibernate:
@@ -26,7 +26,7 @@ spring:
         # Optimize for low memory
         jdbc.batch_size: 5
         order_inserts: true
-        order_updates: true  # Static Resources (serve React app)
+        order_updates: true # Static Resources (serve React app)
   web:
     resources:
       static-locations: classpath:/static/,file:static/

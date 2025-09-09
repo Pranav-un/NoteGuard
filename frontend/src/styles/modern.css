@@ -2652,7 +2652,7 @@ body {
 /* UNIVERSAL BUTTON VISIBILITY OVERRIDE - MUST BE LAST */
 /* This overrides any conflicting styles from other CSS files */
 .action-btn,
-.share-btn, 
+.share-btn,
 .edit-btn,
 .delete-btn,
 button[class*="btn"],

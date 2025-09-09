@@ -266,34 +266,37 @@ const NotePage: React.FC = () => {
                   tabIndex={0}
                   title="Share Note"
                   style={{
-                    display: 'inline-flex',
-                    visibility: 'visible',
+                    display: "inline-flex",
+                    visibility: "visible",
                     opacity: 1,
-                    background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-                    color: 'white',
-                    padding: '10px 16px',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(14, 165, 233, 0.3)',
-                    fontSize: '14px',
+                    background:
+                      "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+                    color: "white",
+                    padding: "10px 16px",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(14, 165, 233, 0.3)",
+                    fontSize: "14px",
                     fontWeight: 500,
-                    cursor: 'pointer',
-                    alignItems: 'center',
-                    gap: '8px',
-                    position: 'relative',
+                    cursor: "pointer",
+                    alignItems: "center",
+                    gap: "8px",
+                    position: "relative",
                     zIndex: 99999,
-                    minHeight: '36px',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 2px 4px rgba(14, 165, 233, 0.2)',
-                    lineHeight: 1
+                    minHeight: "36px",
+                    textDecoration: "none",
+                    transition: "all 0.2s ease",
+                    boxShadow: "0 2px 4px rgba(14, 165, 233, 0.2)",
+                    lineHeight: 1,
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)';
-                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)";
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   <Share className="h-4 w-4" />
@@ -306,34 +309,37 @@ const NotePage: React.FC = () => {
                   tabIndex={0}
                   title="Edit Note"
                   style={{
-                    display: 'inline-flex',
-                    visibility: 'visible',
+                    display: "inline-flex",
+                    visibility: "visible",
                     opacity: 1,
-                    background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
-                    color: 'white',
-                    padding: '10px 16px',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(124, 58, 237, 0.3)',
-                    fontSize: '14px',
+                    background:
+                      "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
+                    color: "white",
+                    padding: "10px 16px",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(124, 58, 237, 0.3)",
+                    fontSize: "14px",
                     fontWeight: 500,
-                    cursor: 'pointer',
-                    alignItems: 'center',
-                    gap: '8px',
-                    position: 'relative',
+                    cursor: "pointer",
+                    alignItems: "center",
+                    gap: "8px",
+                    position: "relative",
                     zIndex: 99999,
-                    minHeight: '36px',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 2px 4px rgba(124, 58, 237, 0.2)',
-                    lineHeight: 1
+                    minHeight: "36px",
+                    textDecoration: "none",
+                    transition: "all 0.2s ease",
+                    boxShadow: "0 2px 4px rgba(124, 58, 237, 0.2)",
+                    lineHeight: 1,
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)';
-                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)";
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   <Edit className="h-4 w-4" />
@@ -346,34 +352,37 @@ const NotePage: React.FC = () => {
                   tabIndex={0}
                   title="Delete Note"
                   style={{
-                    display: 'inline-flex',
-                    visibility: 'visible',
+                    display: "inline-flex",
+                    visibility: "visible",
                     opacity: 1,
-                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                    color: 'white',
-                    padding: '10px 16px',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(220, 38, 38, 0.3)',
-                    fontSize: '14px',
+                    background:
+                      "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
+                    color: "white",
+                    padding: "10px 16px",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(220, 38, 38, 0.3)",
+                    fontSize: "14px",
                     fontWeight: 500,
-                    cursor: 'pointer',
-                    alignItems: 'center',
-                    gap: '8px',
-                    position: 'relative',
+                    cursor: "pointer",
+                    alignItems: "center",
+                    gap: "8px",
+                    position: "relative",
                     zIndex: 99999,
-                    minHeight: '36px',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s ease',
-                    boxShadow: '0 2px 4px rgba(220, 38, 38, 0.2)',
-                    lineHeight: 1
+                    minHeight: "36px",
+                    textDecoration: "none",
+                    transition: "all 0.2s ease",
+                    boxShadow: "0 2px 4px rgba(220, 38, 38, 0.2)",
+                    lineHeight: 1,
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)';
-                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background =
+                      "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)";
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   <Trash2 className="h-4 w-4" />

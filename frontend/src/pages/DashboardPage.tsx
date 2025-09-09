@@ -310,35 +310,38 @@ const DashboardPage: React.FC = () => {
                             }}
                             title="View Note"
                             style={{
-                              display: 'inline-flex',
-                              visibility: 'visible',
+                              display: "inline-flex",
+                              visibility: "visible",
                               opacity: 1,
-                              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                              color: 'white',
-                              padding: '8px 12px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(16, 185, 129, 0.3)',
-                              fontSize: '13px',
+                              background:
+                                "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                              color: "white",
+                              padding: "8px 12px",
+                              borderRadius: "6px",
+                              border: "1px solid rgba(16, 185, 129, 0.3)",
+                              fontSize: "13px",
                               fontWeight: 500,
-                              cursor: 'pointer',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              position: 'relative',
+                              cursor: "pointer",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
                               zIndex: 99999,
-                              minHeight: '32px',
-                              minWidth: '32px',
-                              textDecoration: 'none',
-                              transition: 'all 0.2s ease',
-                              boxShadow: '0 1px 3px rgba(16, 185, 129, 0.2)',
-                              lineHeight: 1
+                              minHeight: "32px",
+                              minWidth: "32px",
+                              textDecoration: "none",
+                              transition: "all 0.2s ease",
+                              boxShadow: "0 1px 3px rgba(16, 185, 129, 0.2)",
+                              lineHeight: 1,
                             }}
                             onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
-                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #059669 0%, #047857 100%)";
+                              e.currentTarget.style.transform = "scale(1.05)";
                             }}
                             onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+                              e.currentTarget.style.transform = "scale(1)";
                             }}
                           >
                             <Eye className="action-icon" />
@@ -353,35 +356,38 @@ const DashboardPage: React.FC = () => {
                             }}
                             title="Edit Note"
                             style={{
-                              display: 'inline-flex',
-                              visibility: 'visible',
+                              display: "inline-flex",
+                              visibility: "visible",
                               opacity: 1,
-                              background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
-                              color: 'white',
-                              padding: '8px 12px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(124, 58, 237, 0.3)',
-                              fontSize: '13px',
+                              background:
+                                "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
+                              color: "white",
+                              padding: "8px 12px",
+                              borderRadius: "6px",
+                              border: "1px solid rgba(124, 58, 237, 0.3)",
+                              fontSize: "13px",
                               fontWeight: 500,
-                              cursor: 'pointer',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              position: 'relative',
+                              cursor: "pointer",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
                               zIndex: 99999,
-                              minHeight: '32px',
-                              minWidth: '32px',
-                              textDecoration: 'none',
-                              transition: 'all 0.2s ease',
-                              boxShadow: '0 1px 3px rgba(124, 58, 237, 0.2)',
-                              lineHeight: 1
+                              minHeight: "32px",
+                              minWidth: "32px",
+                              textDecoration: "none",
+                              transition: "all 0.2s ease",
+                              boxShadow: "0 1px 3px rgba(124, 58, 237, 0.2)",
+                              lineHeight: 1,
                             }}
                             onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)';
-                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)";
+                              e.currentTarget.style.transform = "scale(1.05)";
                             }}
                             onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)';
-                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)";
+                              e.currentTarget.style.transform = "scale(1)";
                             }}
                           >
                             <Edit className="action-icon" />
@@ -393,39 +399,42 @@ const DashboardPage: React.FC = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               // Share functionality - could open modal or copy link
-                              console.log('Share note:', note.id);
+                              console.log("Share note:", note.id);
                             }}
                             title="Share Note"
                             style={{
-                              display: 'inline-flex',
-                              visibility: 'visible',
+                              display: "inline-flex",
+                              visibility: "visible",
                               opacity: 1,
-                              background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-                              color: 'white',
-                              padding: '8px 12px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(14, 165, 233, 0.3)',
-                              fontSize: '13px',
+                              background:
+                                "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+                              color: "white",
+                              padding: "8px 12px",
+                              borderRadius: "6px",
+                              border: "1px solid rgba(14, 165, 233, 0.3)",
+                              fontSize: "13px",
                               fontWeight: 500,
-                              cursor: 'pointer',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              position: 'relative',
+                              cursor: "pointer",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
                               zIndex: 99999,
-                              minHeight: '32px',
-                              minWidth: '32px',
-                              textDecoration: 'none',
-                              transition: 'all 0.2s ease',
-                              boxShadow: '0 1px 3px rgba(14, 165, 233, 0.2)',
-                              lineHeight: 1
+                              minHeight: "32px",
+                              minWidth: "32px",
+                              textDecoration: "none",
+                              transition: "all 0.2s ease",
+                              boxShadow: "0 1px 3px rgba(14, 165, 233, 0.2)",
+                              lineHeight: 1,
                             }}
                             onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)';
-                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)";
+                              e.currentTarget.style.transform = "scale(1.05)";
                             }}
                             onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
-                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)";
+                              e.currentTarget.style.transform = "scale(1)";
                             }}
                           >
                             <Share className="action-icon" />
@@ -440,35 +449,38 @@ const DashboardPage: React.FC = () => {
                             }}
                             title="Delete Note"
                             style={{
-                              display: 'inline-flex',
-                              visibility: 'visible',
+                              display: "inline-flex",
+                              visibility: "visible",
                               opacity: 1,
-                              background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                              color: 'white',
-                              padding: '8px 12px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(220, 38, 38, 0.3)',
-                              fontSize: '13px',
+                              background:
+                                "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
+                              color: "white",
+                              padding: "8px 12px",
+                              borderRadius: "6px",
+                              border: "1px solid rgba(220, 38, 38, 0.3)",
+                              fontSize: "13px",
                               fontWeight: 500,
-                              cursor: 'pointer',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              position: 'relative',
+                              cursor: "pointer",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
                               zIndex: 99999,
-                              minHeight: '32px',
-                              minWidth: '32px',
-                              textDecoration: 'none',
-                              transition: 'all 0.2s ease',
-                              boxShadow: '0 1px 3px rgba(220, 38, 38, 0.2)',
-                              lineHeight: 1
+                              minHeight: "32px",
+                              minWidth: "32px",
+                              textDecoration: "none",
+                              transition: "all 0.2s ease",
+                              boxShadow: "0 1px 3px rgba(220, 38, 38, 0.2)",
+                              lineHeight: 1,
                             }}
                             onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)';
-                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)";
+                              e.currentTarget.style.transform = "scale(1.05)";
                             }}
                             onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)';
-                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.background =
+                                "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)";
+                              e.currentTarget.style.transform = "scale(1)";
                             }}
                           >
                             <Trash2 className="action-icon" />
