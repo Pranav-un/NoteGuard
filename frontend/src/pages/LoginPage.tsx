@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLoading } from "../context/LoadingContext";
 import { toast } from "react-hot-toast";
-import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import type { LoginRequest } from "../types";
 
 const LoginPage: React.FC = () => {
@@ -59,12 +59,12 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="app-page auth-container">
       <div className="auth-card">
         {/* Brand Header */}
         <div className="auth-header">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600 mb-4">
-            <Shield className="h-6 w-6 text-white" />
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-md bg-accent-50 mb-4">
+            <img src="/logo.svg" alt="NoteGuard Logo" className="h-5 w-auto" />
           </div>
           <h1 className="auth-title">Welcome back</h1>
           <p className="auth-subtitle">Sign in to your NoteGuard account</p>
@@ -81,7 +81,7 @@ const LoginPage: React.FC = () => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-slate-400" />
+                <Mail className="h-4 w-4 text-gray-400" />
               </div>
               <input
                 id="emailOrUsername"
@@ -91,7 +91,7 @@ const LoginPage: React.FC = () => {
                 required
                 value={formData.emailOrUsername}
                 onChange={handleChange}
-                className="form-input pl-10"
+                className="form-input pl-9"
                 placeholder="Enter your email or username"
                 disabled={isLoginLoading}
               />
@@ -105,7 +105,7 @@ const LoginPage: React.FC = () => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-slate-400" />
+                <Lock className="h-4 w-4 text-gray-400" />
               </div>
               <input
                 id="password"
@@ -115,20 +115,20 @@ const LoginPage: React.FC = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="form-input pl-10 pr-10"
+                className="form-input pl-9 pr-9"
                 placeholder="Enter your password"
                 disabled={isLoginLoading}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors duration-200"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
                 disabled={isLoginLoading}
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
+                  <EyeOff className="h-4 w-4" />
                 ) : (
-                  <Eye className="h-5 w-5" />
+                  <Eye className="h-4 w-4" />
                 )}
               </button>
             </div>
@@ -138,24 +138,20 @@ const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoginLoading}
-            className="btn btn-primary w-full btn-lg"
+            className="btn btn-primary w-full"
           >
-            {isLoginLoading ? (
-              <div className="loading-spinner mr-2" />
-            ) : (
-              <ArrowRight className="h-4 w-4 ml-2" />
-            )}
+            {isLoginLoading ? <div className="loading-spinner mr-2" /> : null}
             {isLoginLoading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
         {/* Sign Up Link */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-slate-600">
+        <div className="mt-5 text-center">
+          <p className="text-sm text-gray-600">
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+              className="font-medium text-accent-600 hover:text-accent-700 transition-colors duration-200"
             >
               Sign up
             </Link>
@@ -163,8 +159,8 @@ const LoginPage: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-slate-400">
+        <div className="mt-6 text-center">
+          <p className="text-xs text-gray-400">
             © 2024 NoteGuard. Secure your thoughts.
           </p>
         </div>

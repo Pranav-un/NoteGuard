@@ -5,11 +5,13 @@ import RegisterPage from "../pages/RegisterPage";
 import DashboardPage from "../pages/DashboardPage";
 import NotePage from "../pages/NotePage";
 import AdminPage from "../pages/AdminPage";
+import LandingPage from "../pages/LandingPage";
+import SharedNotePage from "../pages/SharedNotePage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/dashboard" replace />,
+    element: <LandingPage />,
   },
   {
     path: "/login",
@@ -36,8 +38,16 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "/note/:id/edit",
+    element: (
+      <ProtectedRoute>
+        <NotePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "/shared/:shareToken",
-    element: <NotePage />,
+    element: <SharedNotePage />,
   },
   {
     path: "/admin",

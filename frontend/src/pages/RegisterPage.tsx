@@ -3,15 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLoading } from "../context/LoadingContext";
 import { toast } from "react-hot-toast";
-import {
-  UserPlus,
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  ArrowRight,
-} from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import type { RegisterRequest } from "../types";
 
 const RegisterPage: React.FC = () => {
@@ -106,12 +98,12 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="app-page auth-container">
       <div className="auth-card">
         {/* Brand Header */}
         <div className="auth-header">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600 mb-4">
-            <UserPlus className="h-6 w-6 text-white" />
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-md bg-accent-50 mb-4">
+            <img src="/logo.svg" alt="NoteGuard Logo" className="h-5 w-auto" />
           </div>
           <h1 className="auth-title">Create your account</h1>
           <p className="auth-subtitle">
@@ -128,7 +120,7 @@ const RegisterPage: React.FC = () => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-slate-400" />
+                <User className="h-4 w-4 text-gray-400" />
               </div>
               <input
                 id="username"
@@ -138,9 +130,9 @@ const RegisterPage: React.FC = () => {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className={`form-input pl-10 ${
+                className={`form-input pl-9 ${
                   errors.username
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                    ? "border-red-300 focus:border-red-500 focus:ring-red-100"
                     : ""
                 }`}
                 placeholder="Choose a username"
@@ -148,7 +140,7 @@ const RegisterPage: React.FC = () => {
               />
             </div>
             {errors.username && (
-              <p className="mt-2 text-sm text-red-600">{errors.username}</p>
+              <p className="mt-1 text-xs text-red-600">{errors.username}</p>
             )}
           </div>
 
@@ -275,24 +267,22 @@ const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={isRegisterLoading}
-            className="btn btn-primary w-full btn-lg"
+            className="btn btn-primary w-full"
           >
             {isRegisterLoading ? (
               <div className="loading-spinner mr-2" />
-            ) : (
-              <ArrowRight className="h-4 w-4 ml-2" />
-            )}
+            ) : null}
             {isRegisterLoading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
         {/* Sign In Link */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-slate-600">
+        <div className="mt-5 text-center">
+          <p className="text-sm text-gray-600">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+              className="font-medium text-accent-600 hover:text-accent-700 transition-colors duration-200"
             >
               Sign in
             </Link>
@@ -300,8 +290,8 @@ const RegisterPage: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-slate-400">
+        <div className="mt-6 text-center">
+          <p className="text-xs text-gray-400">
             © 2024 NoteGuard. Secure your thoughts.
           </p>
         </div>

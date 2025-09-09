@@ -147,10 +147,10 @@ const AdminPage: React.FC = () => {
 
   if (isLoading && !stats) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen app-page flex items-center justify-center">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading admin dashboard...</p>
+          <p className="text-gray-300">Loading admin dashboard...</p>
         </div>
       </div>
     );
@@ -158,10 +158,10 @@ const AdminPage: React.FC = () => {
 
   if (error && !stats) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen app-page flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="mx-auto h-12 w-12 text-red-400 mb-4" />
-          <h3 className="text-lg font-medium text-slate-900 mb-2">
+          <h3 className="text-lg font-medium text-gray-100 mb-2">
             Error Loading Dashboard
           </h3>
           <p className="text-slate-600 max-w-sm mx-auto mb-6">{error}</p>
@@ -174,7 +174,7 @@ const AdminPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen app-page">
       {/* Header */}
       <header className="dashboard-header">
         <div className="flex items-center justify-between">
@@ -358,10 +358,10 @@ const AdminPage: React.FC = () => {
                   <h3 className="text-lg font-medium text-slate-900">Users</h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-slate-200">
-                    <thead className="bg-slate-50">
+                  <table className="min-w-full divide-y divide-gray-600">
+                    <thead className="bg-gray-800">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                           User
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
@@ -375,11 +375,11 @@ const AdminPage: React.FC = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-slate-200">
+                    <tbody className="bg-gray-900 divide-y divide-gray-600">
                       {filteredUsers.map((userItem) => (
                         <tr
                           key={userItem.id}
-                          className="hover:bg-slate-50 transition-colors duration-200"
+                          className="hover:bg-gray-800 transition-colors duration-200"
                         >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div>
@@ -451,13 +451,13 @@ const AdminPage: React.FC = () => {
                   <h3 className="text-lg font-medium text-slate-900">Notes</h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-slate-200">
-                    <thead className="bg-slate-50">
+                  <table className="min-w-full divide-y divide-gray-600">
+                    <thead className="bg-gray-800">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                           Title
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                           Author
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
@@ -471,11 +471,11 @@ const AdminPage: React.FC = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-slate-200">
+                    <tbody className="bg-gray-900 divide-y divide-gray-600">
                       {filteredNotes.map((note) => (
                         <tr
                           key={note.id}
-                          className="hover:bg-slate-50 transition-colors duration-200"
+                          className="hover:bg-gray-800 transition-colors duration-200"
                         >
                           <td className="px-6 py-4">
                             <div>

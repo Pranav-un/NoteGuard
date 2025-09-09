@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { noteApi } from "../api/notes";
 import {
@@ -12,26 +12,42 @@ import {
   Calendar,
   AlertCircle,
   CheckCircle,
-  Shield,
   X,
+  Save,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import type { Note, ShareNoteRequest } from "../types";
+import type { Note, ShareNoteRequest, UpdateNoteRequest } from "../types";
 
 const NotePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
+
+  // Check if we're in edit mode
+  const isEditMode = location.pathname.includes("/edit");
 
   const [note, setNote] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
+
+  // Edit mode state
+  const [editFormData, setEditFormData] = useState({
+    title: "",
+    content: "",
+    expirationTime: "",
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Share functionality state
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [shareHours, setShareHours] = useState<number>(24);
   const [shareUrl, setShareUrl] = useState<string>("");
   const [isSharing, setIsSharing] = useState(false);
+
+  // Delete confirmation modal state
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +63,23 @@ const NotePage: React.FC = () => {
       const response = await noteApi.getNoteById(id);
       if (response.data) {
         setNote(response.data);
+
+        // If note is already shared, create the share URL
+        if (response.data.shareToken) {
+          const fullShareUrl = `${window.location.origin}/shared/${response.data.shareToken}`;
+          setShareUrl(fullShareUrl);
+        } else {
+          setShareUrl("");
+        }
+
+        // Populate edit form if in edit mode
+        if (isEditMode) {
+          setEditFormData({
+            title: response.data.title,
+            content: response.data.content,
+            expirationTime: response.data.expirationTime || "",
+          });
+        }
       }
     } catch (err: any) {
       setError(err.message || "Failed to load note");
@@ -57,19 +90,60 @@ const NotePage: React.FC = () => {
   };
 
   const handleDeleteNote = async () => {
-    if (
-      !note ||
-      !window.confirm("Are you sure you want to delete this note?")
-    ) {
-      return;
-    }
+    setIsDeleteModalOpen(true);
+  };
 
+  const confirmDeleteNote = async () => {
+    if (!note) return;
+
+    setIsDeleting(true);
     try {
       await noteApi.deleteNote(note.id.toString());
       toast.success("Note deleted successfully");
       navigate("/dashboard");
     } catch (error) {
       toast.error("Failed to delete note");
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setEditFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdateNote = async () => {
+    if (!note || !id) return;
+
+    if (!editFormData.title.trim() || !editFormData.content.trim()) {
+      toast.error("Title and content are required");
+      return;
+    }
+
+    setIsUpdating(true);
+    try {
+      const updateData: UpdateNoteRequest = {
+        title: editFormData.title.trim(),
+        content: editFormData.content.trim(),
+        ...(editFormData.expirationTime && {
+          expirationTime: editFormData.expirationTime,
+        }),
+      };
+
+      await noteApi.updateNote(id, updateData);
+      toast.success("Note updated successfully!");
+      navigate(`/note/${id}`); // Navigate back to view mode
+    } catch (error) {
+      toast.error("Failed to update note");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -82,7 +156,9 @@ const NotePage: React.FC = () => {
       const shareData: ShareNoteRequest = { expirationHours: shareHours };
       const response = await noteApi.shareNote(note.id.toString(), shareData);
       if (response.data?.shareUrl) {
-        setShareUrl(response.data.shareUrl);
+        // Create full URL for sharing
+        const fullShareUrl = `${window.location.origin}/shared/${response.data.shareToken}`;
+        setShareUrl(fullShareUrl);
         toast.success("Note shared successfully!");
 
         // Refresh note data to show the new share status
@@ -92,6 +168,21 @@ const NotePage: React.FC = () => {
       toast.error("Failed to share note");
     } finally {
       setIsSharing(false);
+    }
+  };
+
+  const handleRevokeShare = async () => {
+    if (!note) return;
+
+    try {
+      await noteApi.revokeShareToken(note.id.toString());
+      setShareUrl("");
+      toast.success("Share link revoked successfully!");
+
+      // Refresh note data to update share status
+      fetchNote();
+    } catch (error) {
+      toast.error("Failed to revoke share link");
     }
   };
 
@@ -120,10 +211,10 @@ const NotePage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="app-page flex items-center justify-center">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading note...</p>
+          <p className="text-slate-300">Loading note...</p>
         </div>
       </div>
     );
@@ -131,13 +222,13 @@ const NotePage: React.FC = () => {
 
   if (error || !note) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="app-page flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="mx-auto h-12 w-12 text-red-400 mb-4" />
-          <h3 className="text-lg font-medium text-slate-900 mb-2">
+          <AlertCircle className="mx-auto h-12 w-12 text-red-300 mb-4" />
+          <h3 className="text-lg font-medium text-slate-100 mb-2">
             Note Not Found
           </h3>
-          <p className="text-slate-600 max-w-sm mx-auto mb-6">
+          <p className="text-slate-300 max-w-sm mx-auto mb-6">
             {error ||
               "The note you're looking for doesn't exist or has been deleted."}
           </p>
@@ -150,113 +241,229 @@ const NotePage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="dashboard-header">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="btn btn-ghost">
+    <div className="app-page">
+      {/* Modern Header */}
+      <header className="modern-header">
+        <div className="header-content">
+          <div className="header-left">
+            <Link to="/dashboard" className="header-back-btn">
               <ArrowLeft className="h-4 w-4" />
-              Back
+              <span>Back to Dashboard</span>
             </Link>
-            <div className="flex items-center gap-2">
-              <Shield className="h-6 w-6 text-indigo-600" />
-              <span className="text-sm text-slate-600">NoteGuard</span>
+            <div className="header-divider"></div>
+            <div className="header-brand">
+              <img src="/logo.svg" alt="Logo" className="h-4 w-auto" />
             </div>
           </div>
 
-          <div className="dashboard-actions">
-            {user?.id === note.userId && (
-              <>
+          <div className="note-actions">
+            {user?.id === note?.ownerId && !isEditMode && (
+              <div className="action-buttons">
                 <button
                   onClick={() => setIsShareModalOpen(true)}
-                  className="btn btn-secondary"
+                  className="action-btn share-btn"
+                  title="Share Note"
                 >
                   <Share className="h-4 w-4" />
-                  Share
+                  <span>Share</span>
                 </button>
-                <Link to={`/notes/${note.id}/edit`} className="btn btn-primary">
+                <Link
+                  to={`/note/${note.id}/edit`}
+                  className="action-btn edit-btn"
+                  title="Edit Note"
+                >
                   <Edit className="h-4 w-4" />
-                  Edit
+                  <span>Edit</span>
                 </Link>
-                <button onClick={handleDeleteNote} className="btn btn-danger">
+                <button
+                  onClick={handleDeleteNote}
+                  className="action-btn delete-btn"
+                  title="Delete Note"
+                >
                   <Trash2 className="h-4 w-4" />
                 </button>
-              </>
+              </div>
+            )}
+            {user?.id === note?.ownerId && isEditMode && (
+              <div className="action-buttons">
+                <button
+                  onClick={handleUpdateNote}
+                  disabled={isUpdating}
+                  className="action-btn save-btn"
+                  title="Save Changes"
+                >
+                  <Save className="h-4 w-4" />
+                  <span>{isUpdating ? "Saving..." : "Save Changes"}</span>
+                </button>
+                <Link
+                  to={`/note/${note.id}`}
+                  className="action-btn cancel-btn"
+                  title="Cancel Editing"
+                >
+                  <X className="h-4 w-4" />
+                  <span>Cancel</span>
+                </Link>
+              </div>
             )}
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Note Status Alerts */}
-          {isExpired && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <div className="flex items-center gap-2 text-red-700">
-                <AlertCircle className="h-5 w-5" />
-                <span className="font-medium">This note has expired</span>
+      <main className="note-main">
+        <div className="note-container">
+          {/* Status Indicators */}
+          <div className="note-status">
+            {isExpired && (
+              <div className="status-alert expired">
+                <div className="alert-header">
+                  <AlertCircle className="alert-icon" />
+                  <span className="alert-title">This note has expired</span>
+                </div>
+                <p className="alert-detail">
+                  Expired on {formatDate(note.expirationTime!)}
+                </p>
               </div>
-              <p className="mt-1 text-sm text-red-600">
-                Expired on {formatDate(note.expirationTime!)}
-              </p>
-            </div>
-          )}
+            )}
 
-          {isShared && (
-            <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <div className="flex items-center gap-2 text-emerald-700">
-                <CheckCircle className="h-5 w-5" />
-                <span className="font-medium">This note is shared</span>
+            {isShared && (
+              <div className="status-alert shared">
+                <div className="alert-header">
+                  <CheckCircle className="alert-icon" />
+                  <span className="alert-title">This note is shared</span>
+                </div>
+                <p className="alert-detail">
+                  Share expires on{" "}
+                  {note.shareExpirationTime &&
+                    formatDate(note.shareExpirationTime)}
+                </p>
               </div>
-              <p className="mt-1 text-sm text-emerald-600">
-                Share expires on{" "}
-                {note.shareExpirationTime &&
-                  formatDate(note.shareExpirationTime)}
-              </p>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Note Card */}
-          <div className="card">
-            <div className="card-header">
-              <h1 className="text-3xl font-bold text-slate-900 mb-4">
-                {note.title}
-              </h1>
-
-              {/* Note Metadata */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Created {formatDate(note.createdAt)}</span>
+          {/* Note Content */}
+          {isEditMode ? (
+            <div className="note-editor">
+              <div className="editor-content">
+                <div className="form-group">
+                  <label htmlFor="title" className="form-label">
+                    Title
+                  </label>
+                  <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    value={editFormData.title}
+                    onChange={handleInputChange}
+                    className="editor-title-input"
+                    placeholder="Enter note title..."
+                    required
+                    disabled={isUpdating}
+                  />
                 </div>
 
-                {note.updatedAt !== note.createdAt && (
-                  <div className="flex items-center gap-2">
-                    <Edit className="h-4 w-4" />
-                    <span>Updated {formatDate(note.updatedAt)}</span>
-                  </div>
-                )}
+                <div className="form-group">
+                  <label htmlFor="content" className="form-label">
+                    Content
+                  </label>
+                  <textarea
+                    id="content"
+                    name="content"
+                    value={editFormData.content}
+                    onChange={handleInputChange}
+                    className="editor-content-input"
+                    rows={12}
+                    placeholder="Write your note content here..."
+                    required
+                    disabled={isUpdating}
+                  />
+                </div>
 
-                {note.expirationTime && !isExpired && (
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-yellow-600" />
-                    <span className="text-yellow-700">
-                      Expires {formatDate(note.expirationTime)}
-                    </span>
-                  </div>
-                )}
+                <div className="form-group">
+                  <label
+                    htmlFor="expirationTime"
+                    className="form-label-with-icon"
+                  >
+                    <Calendar className="label-icon" />
+                    <span>Expiration Time (Optional)</span>
+                  </label>
+                  <input
+                    id="expirationTime"
+                    name="expirationTime"
+                    type="datetime-local"
+                    value={editFormData.expirationTime}
+                    onChange={handleInputChange}
+                    className="editor-date-input"
+                    disabled={isUpdating}
+                  />
+                  <p className="input-help-text">
+                    Leave empty for notes that don't expire
+                  </p>
+                </div>
+
+                <div className="form-buttons">
+                  <Link
+                    to={`/note/${note.id}`}
+                    className="action-btn cancel-btn"
+                  >
+                    <X className="h-4 w-4" />
+                    <span>Cancel</span>
+                  </Link>
+                  <button
+                    onClick={handleUpdateNote}
+                    disabled={isUpdating}
+                    className="action-btn save-btn"
+                  >
+                    {isUpdating ? (
+                      <>
+                        <div className="loading-spinner" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4" />
+                        <span>Save Changes</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
+          ) : (
+            <div className="note-viewer">
+              <div className="note-header">
+                <h1 className="note-title">{note.title}</h1>
+                <div className="note-meta">
+                  <div className="meta-item">
+                    <Calendar className="meta-icon" />
+                    <span>Created {formatDate(note.createdAt)}</span>
+                  </div>
 
-            {/* Note Content */}
-            <div className="prose prose-slate max-w-none">
-              <div className="whitespace-pre-wrap text-slate-700 leading-relaxed">
-                {note.content}
+                  {note.updatedAt !== note.createdAt && (
+                    <div className="meta-item">
+                      <Edit className="meta-icon" />
+                      <span>Updated {formatDate(note.updatedAt)}</span>
+                    </div>
+                  )}
+
+                  {note.expirationTime && !isExpired && (
+                    <div className="meta-item">
+                      <Clock className="meta-icon" />
+                      <span>Expires {formatDate(note.expirationTime)}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="note-body">
+                {note.content.split("\n").map((paragraph, index) => (
+                  <p key={index} className="content-paragraph">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
 
@@ -268,43 +475,54 @@ const NotePage: React.FC = () => {
         >
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100">
-                  <Share className="h-5 w-5 text-indigo-600" />
-                </div>
-                <h2 className="modal-title">Share Note</h2>
-              </div>
+              <h2 className="modal-title">Share Note</h2>
               <button
                 onClick={() => setIsShareModalOpen(false)}
-                className="rounded-md p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors duration-200"
+                className="modal-close"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
             {shareUrl ? (
               <div className="modal-body">
-                <div className="space-y-4">
-                  <div>
-                    <label className="form-label">Share URL</label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={shareUrl}
-                        readOnly
-                        className="form-input flex-1"
-                      />
-                      <button
-                        onClick={() => copyToClipboard(shareUrl)}
-                        className="btn btn-secondary"
-                      >
-                        <Copy className="h-4 w-4" />
-                      </button>
-                    </div>
+                <div className="share-url-group">
+                  <label className="form-label">Share URL</label>
+                  <div className="share-url-input">
+                    <input
+                      type="text"
+                      value={shareUrl}
+                      readOnly
+                      className="form-input"
+                    />
+                    <button
+                      onClick={() => copyToClipboard(shareUrl)}
+                      className="action-btn"
+                      title="Copy to Clipboard"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </button>
                   </div>
-                  <p className="text-sm text-slate-600">
+                  <p className="input-help-text">
                     Anyone with this link can view your note until it expires.
                   </p>
+                </div>
+
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    onClick={() => setIsShareModalOpen(false)}
+                    className="action-btn cancel-btn"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={handleRevokeShare}
+                    className="action-btn danger-btn"
+                  >
+                    <X className="h-4 w-4" />
+                    Revoke Share Link
+                  </button>
                 </div>
               </div>
             ) : (
@@ -327,36 +545,105 @@ const NotePage: React.FC = () => {
                       <option value={72}>3 days</option>
                       <option value={168}>1 week</option>
                     </select>
+                    <p className="input-help-text">
+                      The share link will expire after the selected duration.
+                    </p>
                   </div>
-                  <p className="text-sm text-slate-600">
-                    The share link will expire after the selected duration.
-                  </p>
                 </div>
 
                 <div className="modal-footer">
                   <button
                     type="button"
                     onClick={() => setIsShareModalOpen(false)}
-                    className="btn btn-secondary"
+                    className="action-btn cancel-btn"
                     disabled={isSharing}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="action-btn save-btn"
                     disabled={isSharing}
                   >
                     {isSharing ? (
-                      <div className="loading-spinner mr-2" />
+                      <>
+                        <div className="loading-spinner" />
+                        <span>Creating...</span>
+                      </>
                     ) : (
-                      <Share className="h-4 w-4" />
+                      <>
+                        <Share className="h-4 w-4" />
+                        <span>Create Share Link</span>
+                      </>
                     )}
-                    {isSharing ? "Creating..." : "Create Share Link"}
                   </button>
                 </div>
               </form>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && (
+        <div
+          className="modal-overlay"
+          onClick={() => setIsDeleteModalOpen(false)}
+        >
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">Delete Note</h2>
+              <button
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="modal-close"
+                disabled={isDeleting}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <div className="delete-warning">
+                <AlertCircle className="warning-icon" />
+                <div className="warning-content">
+                  <p className="warning-title">
+                    Are you sure you want to delete this note?
+                  </p>
+                  <p className="warning-message">
+                    "{note?.title}" will be permanently deleted. This action
+                    cannot be undone.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button
+                type="button"
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="action-btn cancel-btn"
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteNote}
+                className="action-btn delete-btn"
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  <>
+                    <div className="loading-spinner" />
+                    <span>Deleting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="h-4 w-4" />
+                    <span>Delete Note</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

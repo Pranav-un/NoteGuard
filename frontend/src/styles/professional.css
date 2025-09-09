@@ -1,0 +1,21 @@
+/* Professional theme glue: ensures variables are loaded before other styles */
+:root {
+  /* Prefer neutral backgrounds and indigo/violet accents */
+  color-scheme: light;
+}
+
+/* Smooth base transitions */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Subtle selection color aligned with accent */
+::selection {
+  background: rgba(124, 58, 237, 0.2);
+}

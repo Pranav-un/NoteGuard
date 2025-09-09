@@ -11,7 +11,9 @@ export interface Note {
   id: number;
   title: string;
   content: string;
-  userId: number;
+  userId?: number; // Keep for backward compatibility
+  ownerId: number; // This is what the backend actually returns
+  user?: User; // The full user object from backend
   shareToken?: string;
   shareExpirationTime?: string;
   expirationTime?: string;

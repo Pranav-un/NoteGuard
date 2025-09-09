@@ -42,7 +42,12 @@ export const noteApi = {
   },
 
   async getSharedNote(shareToken: string) {
-    const response = await api.get<Note>(`/notes/shared/${shareToken}`);
+    const response = await api.get<Note>(`/notes/share/${shareToken}`);
+    return response;
+  },
+
+  async revokeShareToken(id: string) {
+    const response = await api.delete<void>(`/notes/${id}/share`);
     return response;
   },
 };
