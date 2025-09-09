@@ -1,19 +1,21 @@
-# Production Configuration for Railway (PostgreSQL)
+# Free MySQL Configuration (PlanetScale/FreeSQLDatabase)
 spring:
   application:
     name: noteguard-backend
 
-  # PostgreSQL Database (FREE on Railway)
+  # MySQL Configuration
   datasource:
-    url: ${DATABASE_URL}  # Railway auto-provides this
-    # No need to set username/password - Railway handles it
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/noteguard}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     
-  # JPA Configuration 
+  # JPA Configuration
   jpa:
     hibernate:
-      ddl-auto: update  # Same as your MySQL setup
+      ddl-auto: update
     show-sql: false
-    # Hibernate auto-detects PostgreSQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
   # Static Resources (serve React app)
   web:
@@ -28,12 +30,12 @@ server:
   servlet:
     context-path: /
 
-# JWT Configuration (exactly same as before)
+# JWT Configuration  
 jwt:
   secret: ${JWT_SECRET:mySecretKey123456789012345678901234567890}
   expiration: ${JWT_EXPIRATION:86400000}
 
-# Encryption Configuration (exactly same as before)
+# Encryption Configuration
 app:
   encryption:
     secret-key: ${ENCRYPTION_SECRET:mySecretKey12345}
