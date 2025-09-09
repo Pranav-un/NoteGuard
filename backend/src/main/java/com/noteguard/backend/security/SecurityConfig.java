@@ -55,9 +55,10 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
+                    // Health endpoints
+                    .requestMatchers("/health", "/api/health").permitAll()
                     // API endpoints - with /api prefix
                     .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/health").permitAll()
                     .requestMatchers("/api/notes/share/**").permitAll()
                     .requestMatchers("/api/notes/shared/**").permitAll()
                     // Frontend static resources and routing

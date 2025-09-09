@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +22,8 @@ public class DatabaseConfig {
 
     @Value("${DATABASE_URL:}")
     private String databaseUrl;
+
+    private DataSource dataSource;
 
     /**
      * Custom DataSource configuration for Railway PostgreSQL
@@ -54,12 +55,14 @@ public class DatabaseConfig {
             logger.info("Database Name: {}", uri.getPath());
             logger.info("JDBC URL: {}", jdbcUrl);
             
-            return DataSourceBuilder.create()
+            this.dataSource = DataSourceBuilder.create()
                 .driverClassName("org.postgresql.Driver")
                 .url(jdbcUrl)
                 .username(username)
                 .password(password)
                 .build();
+                
+            return this.dataSource;
                 
         } catch (Exception e) {
             logger.error("Failed to parse DATABASE_URL: {}", databaseUrl.replaceAll("password=[^&]*", "password=****"));
@@ -67,28 +70,21 @@ public class DatabaseConfig {
         }
     }
 
-    @Component
-    public static class DatabaseConnectionChecker {
-        
-        private static final Logger logger = LoggerFactory.getLogger(DatabaseConnectionChecker.class);
-        
-        private final DataSource dataSource;
-
-        public DatabaseConnectionChecker(DataSource dataSource) {
-            this.dataSource = dataSource;
+    @EventListener(ApplicationReadyEvent.class)
+    public void checkDatabaseConnection() {
+        if (this.dataSource == null) {
+            logger.info("DataSource not configured (likely not in prod profile)");
+            return;
         }
-
-        @EventListener(ApplicationReadyEvent.class)
-        public void checkDatabaseConnection() {
-            try (Connection connection = dataSource.getConnection()) {
-                logger.info("✅ Database connection successful!");
-                logger.info("Database product name: {}", connection.getMetaData().getDatabaseProductName());
-                logger.info("Database product version: {}", connection.getMetaData().getDatabaseProductVersion());
-                logger.info("Database URL from connection: {}", 
-                    connection.getMetaData().getURL().replaceAll("password=[^&]*", "password=****"));
-            } catch (Exception e) {
-                logger.error("❌ Failed to connect to database: ", e);
-            }
+        
+        try (Connection connection = this.dataSource.getConnection()) {
+            logger.info("✅ Database connection successful!");
+            logger.info("Database product name: {}", connection.getMetaData().getDatabaseProductName());
+            logger.info("Database product version: {}", connection.getMetaData().getDatabaseProductVersion());
+            logger.info("Database URL from connection: {}", 
+                connection.getMetaData().getURL().replaceAll("password=[^&]*", "password=****"));
+        } catch (Exception e) {
+            logger.error("❌ Failed to connect to database: ", e);
         }
     }
 }
