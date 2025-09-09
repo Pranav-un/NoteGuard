@@ -18,6 +18,7 @@ RUN ./mvnw clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=backend-build /app/target/*.jar app.jar
+# Copy frontend build to external static directory
 COPY --from=frontend-build /app/dist ./static
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

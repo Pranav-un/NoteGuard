@@ -6,6 +6,8 @@ import { router } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import "./styles/modern.css";
+import "./styles/landing.css";
+import "./styles/professional.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

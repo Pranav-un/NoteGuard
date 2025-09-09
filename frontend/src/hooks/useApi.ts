@@ -8,12 +8,12 @@ const getApiBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  
+
   // In production (Railway), use relative path since backend serves frontend
   if (import.meta.env.PROD) {
     return "/api";
   }
-  
+
   // Development fallback
   return "http://localhost:8080/api";
 };
