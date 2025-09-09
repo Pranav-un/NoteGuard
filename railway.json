@@ -1,9 +1,8 @@
 {
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "dockerfile"
   },
   "deploy": {
-    "restartPolicyType": "ON_FAILURE",
-    "sleepApplication": false
+    "restartPolicyType": "ON_FAILURE"
   }
 }
