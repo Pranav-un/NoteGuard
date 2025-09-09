@@ -6,7 +6,7 @@ RUN npm ci --only=production
 COPY frontend/ ./
 RUN npm run build
 
-FROM maven:3.9-openjdk-21-slim as backend-build
+FROM maven:3.9-eclipse-temurin-21 as backend-build
 WORKDIR /app
 COPY backend/pom.xml ./
 COPY backend/mvnw ./
