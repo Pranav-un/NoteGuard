@@ -7,8 +7,23 @@ import type {
 } from "axios";
 import toast from "react-hot-toast";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:8080/api";
+// Smart API base URL detection
+const getApiBaseUrl = () => {
+  // If we have an explicit environment variable, use it
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // In production (Railway), use relative path since backend serves frontend
+  if (import.meta.env.PROD) {
+    return "/api";
+  }
+  
+  // Development fallback
+  return "http://localhost:8080/api";
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Create axios instance
 export const apiClient: AxiosInstance = axios.create({

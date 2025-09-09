@@ -2,6 +2,24 @@ import { useState, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import type { ApiResponse } from "../types";
 
+// Smart API base URL detection
+const getApiBaseUrl = () => {
+  // If we have an explicit environment variable, use it
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // In production (Railway), use relative path since backend serves frontend
+  if (import.meta.env.PROD) {
+    return "/api";
+  }
+  
+  // Development fallback
+  return "http://localhost:8080/api";
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
 interface UseApiOptions {
   requireAuth?: boolean;
 }
@@ -37,7 +55,7 @@ export const useApi = (options: UseApiOptions = { requireAuth: true }) => {
           requestHeaders["Authorization"] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`http://localhost:8080/api${url}`, {
+        const response = await fetch(`${API_BASE_URL}${url}`, {
           method,
           headers: requestHeaders,
           body: body ? JSON.stringify(body) : undefined,
