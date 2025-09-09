@@ -4,16 +4,13 @@ spring:
     name: noteguard-backend
 
   # PostgreSQL Database (FREE on Railway)
-  datasource:
-    url: ${DATABASE_URL} # Railway auto-provides this
-    driver-class-name: org.postgresql.Driver
-    # Railway provides the full URL with credentials, so we don't need separate username/password
-    hikari:
-      maximum-pool-size: 5
-      minimum-idle: 1
-      connection-timeout: 20000
-      idle-timeout: 300000
-
+  # DataSource is configured in DatabaseConfig.java to handle Railway's URL format
+  
+  # Disable SQL initialization - we use JPA/Hibernate DDL auto
+  sql:
+    init:
+      mode: never
+  
   # JPA Configuration
   jpa:
     hibernate:
