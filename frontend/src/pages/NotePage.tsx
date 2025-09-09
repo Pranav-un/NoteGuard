@@ -259,32 +259,125 @@ const NotePage: React.FC = () => {
           <div className="note-actions">
             {user?.id === note?.ownerId && !isEditMode && (
               <div className="action-buttons">
-                <button
-                  id="noteguard-share-btn-ultra-specific-123456"
+                <div
+                  id="mega-ultra-share-override-999888777"
                   onClick={() => setIsShareModalOpen(true)}
-                  className="action-btn share-btn"
+                  role="button"
+                  tabIndex={0}
                   title="Share Note"
+                  style={{
+                    display: 'inline-flex',
+                    visibility: 'visible',
+                    opacity: 1,
+                    background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+                    color: 'white',
+                    padding: '10px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(14, 165, 233, 0.3)',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    alignItems: 'center',
+                    gap: '8px',
+                    position: 'relative',
+                    zIndex: 99999,
+                    minHeight: '36px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(14, 165, 233, 0.2)',
+                    lineHeight: 1
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
                 >
                   <Share className="h-4 w-4" />
                   <span>Share</span>
-                </button>
-                <Link
-                  id="noteguard-edit-btn-ultra-specific-789012"
-                  to={`/note/${note.id}/edit`}
-                  className="action-btn edit-btn"
+                </div>
+                <div
+                  id="mega-ultra-edit-override-666555444"
+                  onClick={() => navigate(`/note/${note.id}/edit`)}
+                  role="button"
+                  tabIndex={0}
                   title="Edit Note"
+                  style={{
+                    display: 'inline-flex',
+                    visibility: 'visible',
+                    opacity: 1,
+                    background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
+                    color: 'white',
+                    padding: '10px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(124, 58, 237, 0.3)',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    alignItems: 'center',
+                    gap: '8px',
+                    position: 'relative',
+                    zIndex: 99999,
+                    minHeight: '36px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(124, 58, 237, 0.2)',
+                    lineHeight: 1
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
                 >
                   <Edit className="h-4 w-4" />
                   <span>Edit</span>
-                </Link>
-                <button
-                  id="noteguard-delete-btn-ultra-specific-345678"
+                </div>
+                <div
+                  id="mega-ultra-delete-override-333222111"
                   onClick={handleDeleteNote}
-                  className="action-btn delete-btn"
+                  role="button"
+                  tabIndex={0}
                   title="Delete Note"
+                  style={{
+                    display: 'inline-flex',
+                    visibility: 'visible',
+                    opacity: 1,
+                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                    color: 'white',
+                    padding: '10px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(220, 38, 38, 0.3)',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    alignItems: 'center',
+                    gap: '8px',
+                    position: 'relative',
+                    zIndex: 99999,
+                    minHeight: '36px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(220, 38, 38, 0.2)',
+                    lineHeight: 1
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
                 >
                   <Trash2 className="h-4 w-4" />
-                </button>
+                </div>
               </div>
             )}
             {user?.id === note?.ownerId && isEditMode && (
