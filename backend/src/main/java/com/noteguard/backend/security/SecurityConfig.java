@@ -61,11 +61,11 @@ public class SecurityConfig {
                     .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/api/notes/share/**").permitAll()
                     .requestMatchers("/api/notes/shared/**").permitAll()
-                    // Frontend static resources (MUST BE FIRST)
-                    .requestMatchers("/static/**", "/assets/**", "/index.html", "/favicon.ico", "/manifest.json").permitAll()
-                    .requestMatchers("/*.css", "/*.js", "/*.ico", "/*.png", "/*.jpg", "/*.svg", "/*.json", "/*.woff*", "/*.ttf", "/*.eot").permitAll()
-                    // Frontend routing paths
+                    // Frontend static resources and routing
                     .requestMatchers("/", "/login", "/register", "/dashboard", "/note/**", "/shared/**", "/admin").permitAll()
+                    .requestMatchers("/static/**", "/index.html", "/favicon.ico", "/manifest.json").permitAll()
+                    .requestMatchers("/*.js", "/*.css", "/*.ico", "/*.png", "/*.jpg", "/*.svg").permitAll()
+                    .requestMatchers("/assets/**").permitAll()
                     // All other API requests require authentication
                     .requestMatchers("/api/**").authenticated()
                     // Everything else is permitted (for frontend routing)

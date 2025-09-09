@@ -239,7 +239,16 @@
   gap: 0.5rem;
 }
 
-.action-btn {
+/* CRITICAL: Button visibility fixes - highest specificity */
+.action-btn,
+button.action-btn,
+a.action-btn,
+.share-btn,
+button.share-btn,
+a.share-btn,
+.edit-btn,
+button.edit-btn,
+a.edit-btn {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
@@ -254,14 +263,26 @@
   cursor: pointer !important;
   opacity: 1 !important;
   visibility: visible !important;
+  background: transparent !important;
+  color: white !important;
+  position: relative !important;
+  z-index: 10 !important;
+  min-width: auto !important;
+  min-height: 36px !important;
+  max-width: none !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 .action-btn span {
   margin-left: 0.25rem;
 }
 
-.share-btn {
-  background: var(--gradient-info) !important;
+/* Share button specific styles */
+.share-btn,
+button.share-btn,
+a.share-btn {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
   color: white !important;
   border: 1px solid rgba(14, 165, 233, 0.3) !important;
   box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3) !important;
@@ -269,13 +290,19 @@
   visibility: visible !important;
 }
 
-.share-btn:hover {
-  box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2);
-  transform: translateY(-1px);
+.share-btn:hover,
+button.share-btn:hover,
+a.share-btn:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2) !important;
+  transform: translateY(-1px) !important;
 }
 
-.edit-btn {
-  background: var(--gradient-primary) !important;
+/* Edit button specific styles */
+.edit-btn,
+button.edit-btn,
+a.edit-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
   color: white !important;
   border: 1px solid rgba(124, 58, 237, 0.3) !important;
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3) !important;
@@ -2620,4 +2647,39 @@ body {
     flex-direction: column;
     align-items: center;
   }
+}
+
+/* UNIVERSAL BUTTON VISIBILITY OVERRIDE - MUST BE LAST */
+/* This overrides any conflicting styles from other CSS files */
+.action-btn,
+.share-btn, 
+.edit-btn,
+.delete-btn,
+button[class*="btn"],
+a[class*="btn"],
+[role="button"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999 !important;
+}
+
+/* Ensure buttons are never hidden */
+.action-btn[style*="display: none"],
+.share-btn[style*="display: none"],
+.edit-btn[style*="display: none"] {
+  display: inline-flex !important;
+}
+
+.action-btn[style*="visibility: hidden"],
+.share-btn[style*="visibility: hidden"],
+.edit-btn[style*="visibility: hidden"] {
+  visibility: visible !important;
+}
+
+.action-btn[style*="opacity: 0"],
+.share-btn[style*="opacity: 0"],
+.edit-btn[style*="opacity: 0"] {
+  opacity: 1 !important;
 }
