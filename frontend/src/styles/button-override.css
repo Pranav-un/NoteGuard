@@ -1,0 +1,127 @@
+/* NUCLEAR BUTTON VISIBILITY OVERRIDE - MAXIMUM SPECIFICITY */
+
+/* This CSS file uses maximum specificity to ensure buttons are visible */
+/* It targets multiple selectors with the highest possible priority */
+
+/* General button visibility enforcement */
+button,
+div[role="button"],
+[role="button"],
+.action-btn,
+.share-btn,
+.edit-btn,
+.delete-btn,
+.note-action-btn {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+/* Target any button that might be hidden by inline styles */
+button[style*="display: none"],
+button[style*="visibility: hidden"],
+button[style*="opacity: 0"],
+div[style*="display: none"],
+div[style*="visibility: hidden"],
+div[style*="opacity: 0"],
+[role="button"][style*="display: none"],
+[role="button"][style*="visibility: hidden"],
+[role="button"][style*="opacity: 0"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 999999 !important;
+}
+
+/* Ultra-specific targeting for our button IDs */
+#mega-ultra-share-override-999888777,
+#mega-ultra-edit-override-666555444,
+#mega-ultra-delete-override-333222111,
+#mega-ultra-dashboard-view-override-111222333,
+#mega-ultra-dashboard-edit-override-444555666,
+#mega-ultra-dashboard-share-override-555666777,
+#mega-ultra-dashboard-delete-override-777888999 {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999999 !important;
+  min-height: 32px !important;
+  min-width: 32px !important;
+  cursor: pointer !important;
+}
+
+/* Override any potential CSS resets */
+* button,
+* div[role="button"],
+* [role="button"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Force visibility on note-actions containers */
+.note-actions,
+.action-buttons {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  gap: 8px !important;
+}
+
+.note-actions > *,
+.action-buttons > * {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Additional specificity with body context */
+body .note-actions button,
+body .note-actions div[role="button"],
+body .note-actions [role="button"],
+body .action-buttons button,
+body .action-buttons div[role="button"],
+body .action-buttons [role="button"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 999999 !important;
+}
+
+/* CSS custom properties override */
+:root {
+  --button-display: inline-flex !important;
+  --button-visibility: visible !important;
+  --button-opacity: 1 !important;
+}
+
+/* Force all buttons in app pages to be visible */
+.app-page button,
+.app-page div[role="button"],
+.app-page [role="button"] {
+  display: var(--button-display) !important;
+  visibility: var(--button-visibility) !important;
+  opacity: var(--button-opacity) !important;
+  z-index: 999999 !important;
+}
+
+/* Target common hiding patterns */
+.hidden,
+.invisible,
+[hidden] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Make sure icons are visible too */
+.h-4,
+.w-4,
+.action-icon {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}

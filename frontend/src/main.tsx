@@ -8,6 +8,8 @@ import { LoadingProvider } from "./context/LoadingContext";
 import "./styles/modern.css";
 import "./styles/landing.css";
 import "./styles/professional.css";
+import "./styles/button-override.css"; // LOAD LAST TO OVERRIDE EVERYTHING
+import "./utils/button-enforcer"; // ENFORCE BUTTON VISIBILITY WITH JS
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
