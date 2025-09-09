@@ -6,14 +6,26 @@ spring:
   # PostgreSQL Database (FREE on Railway)
   datasource:
     url: ${DATABASE_URL} # Railway auto-provides this
-    # No need to set username/password - Railway handles it
+    driver-class-name: org.postgresql.Driver
+    # Railway provides the full URL with credentials, so we don't need separate username/password
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 20000
+      idle-timeout: 300000
 
   # JPA Configuration
   jpa:
     hibernate:
       ddl-auto: update # Same as your MySQL setup
-    show-sql: false
-    # Hibernate auto-detects PostgreSQL
+    show-sql: true # Enable for debugging
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
   # Static Resources (serve React app)
   web:
