@@ -2,8 +2,6 @@
 
  A full-stack encrypted note-sharing application with expiring shareable links, built with security and scalability in mind.
 
----
-
 ## 🚀 Features
 
 - 🔐 AES-based **end-to-end encryption** for all notes
