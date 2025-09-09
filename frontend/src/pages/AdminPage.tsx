@@ -10,7 +10,6 @@ import {
   BarChart3,
   Search,
   Trash2,
-  Calendar,
   Activity,
   AlertCircle,
   CheckCircle,
