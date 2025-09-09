@@ -260,6 +260,7 @@ const NotePage: React.FC = () => {
             {user?.id === note?.ownerId && !isEditMode && (
               <div className="action-buttons">
                 <button
+                  id="noteguard-share-btn-ultra-specific-123456"
                   onClick={() => setIsShareModalOpen(true)}
                   className="action-btn share-btn"
                   title="Share Note"
@@ -268,6 +269,7 @@ const NotePage: React.FC = () => {
                   <span>Share</span>
                 </button>
                 <Link
+                  id="noteguard-edit-btn-ultra-specific-789012"
                   to={`/note/${note.id}/edit`}
                   className="action-btn edit-btn"
                   title="Edit Note"
@@ -276,6 +278,7 @@ const NotePage: React.FC = () => {
                   <span>Edit</span>
                 </Link>
                 <button
+                  id="noteguard-delete-btn-ultra-specific-345678"
                   onClick={handleDeleteNote}
                   className="action-btn delete-btn"
                   title="Delete Note"

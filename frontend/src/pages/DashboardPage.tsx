@@ -301,6 +301,7 @@ const DashboardPage: React.FC = () => {
 
                         <div className="note-actions">
                           <button
+                            id="noteguard-dashboard-view-btn-ultra-specific-111111"
                             className="note-action-btn view-btn"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -311,6 +312,7 @@ const DashboardPage: React.FC = () => {
                             <Eye className="action-icon" />
                           </button>
                           <button
+                            id="noteguard-dashboard-edit-btn-ultra-specific-222222"
                             className="note-action-btn edit-btn"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -321,6 +323,7 @@ const DashboardPage: React.FC = () => {
                             <Edit className="action-icon" />
                           </button>
                           <button
+                            id="noteguard-dashboard-delete-btn-ultra-specific-333333"
                             className="note-action-btn delete-btn"
                             onClick={(e) => {
                               e.stopPropagation();
