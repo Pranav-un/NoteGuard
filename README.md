@@ -81,10 +81,7 @@ NoteGuard/
 ---
 
 ## 🌐 Deployment
-
-- **Frontend:** Vercel / Netlify
-- **Backend:** Render / Railway / AWS / DigitalOcean
-- **Database:** Railway / PlanetScale / AWS RDS
+Fully in railway now(will be changed soon)
 
 ---
 
